@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-6 mx-auto">
+
+  <div class="text-center my-5">
+    <img src="https://www.onlygfx.com/wp-content/uploads/2015/12/coffee-cup.png" class="img-fluid img-responsive" style="height: 200px;">
+  </div>
+
+    <form method="post">
+      {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Enter name</label>
+          <input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Enter Amount</label>
+          <input name="amount" type="number" class="form-control" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Submit</button>
+      </form>
+
+
+</div>
+
+{% if payment %}
+<div class="text-center mx-auto">
+<form action="/success" method="POST">
+  <script
+    src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="rzp_test_Csa5ZSxUC4fjY9"
+    data-amount="{{payment.amount}}"
+    data-currency="INR"
+    data-order_id="{{payment.id}}"
+    data-buttontext="Pay with Razorpay"
+    data-name="Coffee Corner"
+    data-description="Test transaction"
+    data-image="https://example.com/your_logo.jpg"
+    data-prefill.name="Gaurav Bhardwaj"
+    data-prefill.email="gauravbharadwaj233@gmail.com"
+    data-prefill.contact="8306140234"
+    data-theme.color="#F37254">
+  </script>
+
+  <input type="hidden" custom="Hidden Element" name="hidden">
+</form>
+{% endif %}
+</div>
+{% endblock %}
